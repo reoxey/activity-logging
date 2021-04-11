@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package user;
+
+option go_package="user;user";
+
+message User {
+  int32 id = 1;
+  string Name = 2;
+  string Email = 3;
+  string Phone = 4;
+}
+
+message CreateUserReq {
+  User user = 1;
+}
+
+message OneUserReq {
+  int32 id = 1;
+}
+
+message ListUsersReq {}
+
+service UserService {
+  rpc CreateUser(CreateUserReq) returns (User);
+  rpc OneUser(OneUserReq) returns (User);
+  rpc ListUsers(ListUsersReq) returns (stream User);
+}
