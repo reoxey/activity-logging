@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package activity;
+
+option go_package="activity;activity";
+
+message User {
+  int32 id = 1;
+  string Name = 2;
+  string Email = 3;
+  string Phone = 4;
+}
+
+message Activity {
+  int32 id = 1;
+  User user = 2;
+  enum ActivityType {
+    Play = 0;
+    Sleep = 1;
+    Eat = 2;
+    Read = 3;
+  }
+  ActivityType activityType = 3;
+  int64 timestamp = 4;
+  int64 duration = 5;
+  string label = 6;
+}
+
+message CreateActivityReq {
+  Activity activity = 1;
+}
+
+message OneActivityReq {
+  int32 id = 1;
+}
+
+message ListUserActivitiesReq {
+  int32 userId = 1;
+}
+
+service ActivityService {
+  rpc CreateActivity(CreateActivityReq) returns (Activity);
+  rpc OneActivity(OneActivityReq) returns (Activity);
+  rpc ListUserActivities(ListUserActivitiesReq) returns (stream Activity);
+}
